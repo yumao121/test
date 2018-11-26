@@ -134,12 +134,15 @@ public class HBaseDemo {
 			
 			for (int j = 0; j < 100; j++) {
 				String dnum = t.getPhoneNum("177");
+				String datestr = t.getDate("2018");
 				String length = r.nextInt(99) + "";
 				String type = r.nextInt(2) + "";
+				
 				String rowkey = pnum + "_" + (Long.MAX_VALUE-sdf.parse(datestr).getTime());
 				
 				Put put = new Put(rowkey.getBytes());
 
+				put.add(family, "dnum".getBytes(), dnum.getBytes());
 				put.add(family, "date".getBytes(), datestr.getBytes());
 				put.add(family, "length".getBytes(), length.getBytes());
 				put.add(family, "type".getBytes(), type.getBytes());
@@ -148,7 +151,9 @@ public class HBaseDemo {
 			}
 		}
 		
+		htable.put(puts);
 	}
+	
 
 	/**
 	 * 生成测试数据
